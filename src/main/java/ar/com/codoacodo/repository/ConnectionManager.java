@@ -16,7 +16,7 @@ public class ConnectionManager {
 			String password = PropertiesFileReader.getValue("db.password");
 			String port = PropertiesFileReader.getValue("db.port");
 			String dbName = PropertiesFileReader.getValue("db.name");
-			String dbUrl = "jdbc:mysql://"+host+":"+port+"/"+dbName+"?serverTimeZone=UTC&useSSL=false";
+			String dbUrl = "jdbc:mysql://"+host+":"+port+"/"+dbName+"?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true";
 			String driver = "com.mysql.cj.jdbc.Driver";
 
 			Class.forName(driver);

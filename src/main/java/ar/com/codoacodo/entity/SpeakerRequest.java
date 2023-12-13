@@ -2,6 +2,8 @@ package ar.com.codoacodo.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+import java.util.Optional;
+
 public class SpeakerRequest {
     private String name;
     private String lastName;
@@ -18,14 +20,7 @@ public class SpeakerRequest {
         this.topic = topic;
     }
 
-    public void setName(String name) {
-        if(name != null) {
-            this.name = name;
-        } else {
-            this.name ="N/D";
-        }
-
-    }
+    public void setName(String name) { this.name = name; }
     public String getName() {
         return this.name;
     }

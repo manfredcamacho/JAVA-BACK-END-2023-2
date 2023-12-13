@@ -79,6 +79,7 @@ public class MySQLSpeakerRepository implements SpeakerRepository {
 				
 		try(Connection conn = ConnectionManager.getConnection()) {
 			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setLong(1, id);
 			statement.executeUpdate();
 		}catch(Exception e) {
 			throw new IllegalArgumentException("Failed to delete the speaker.", e);
