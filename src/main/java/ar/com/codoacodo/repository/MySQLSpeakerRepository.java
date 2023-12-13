@@ -12,7 +12,7 @@ import ar.com.codoacodo.entity.Speaker;
 public class MySQLSpeakerRepository implements SpeakerRepository {
 
 	public void save(Speaker speaker) {
-		String sql = "insert into orador (nombre,apellido,mail,tema,fecha_alta) values(?,?,?,?,?)";
+		String sql = "insert into speaker (name,lastname,email,topic,creationDate) values(?,?,?,?,?)";
 		
 		try(Connection conn = ConnectionManager.getConnection()) {
 			PreparedStatement statement  = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -33,7 +33,7 @@ public class MySQLSpeakerRepository implements SpeakerRepository {
 	}
 
 	public Speaker getById(Long id) {
-		String sql = "select nombre, apellido, tema, mail, fecha_alta from orador where id = ?";
+		String sql = "select name, lastname, email, topic, creationDate from speaker where id = ?";
 		
 		Speaker speaker = null;
 		try(Connection conn = ConnectionManager.getConnection()) {
@@ -58,7 +58,7 @@ public class MySQLSpeakerRepository implements SpeakerRepository {
 
 	@Override
 	public void update(Speaker speaker) {
-		String sql = "update orador set nombre=?, apellido=?, tema=? where id = ?";
+		String sql = "update speaker set name=?, lastname=?, topic=? where id = ?";
 
 		try(Connection conn = ConnectionManager.getConnection()) {
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -75,7 +75,7 @@ public class MySQLSpeakerRepository implements SpeakerRepository {
 
 	@Override
 	public void delete(Long id) {
-		String sql = "delete from orador where id = ?";
+		String sql = "delete from speaker where id = ?";
 				
 		try(Connection conn = ConnectionManager.getConnection()) {
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -88,7 +88,7 @@ public class MySQLSpeakerRepository implements SpeakerRepository {
 
 	@Override
 	public List<Speaker> findAll() {
-		String sql = "select id, nombre, apellido, tema, mail, fecha_alta from orador";
+		String sql = "select id, name, lastname, email, topic, creationDate from speaker";
 		
 		List<Speaker> speakers = new ArrayList<>();
 		try(Connection conn = ConnectionManager.getConnection()) {
