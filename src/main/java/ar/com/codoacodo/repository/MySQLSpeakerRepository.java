@@ -28,6 +28,7 @@ public class MySQLSpeakerRepository implements SpeakerRepository {
 				speaker.setId(res.getLong(1));
 
 		}catch (Exception e) {
+			System.out.println("[ERROR] " + e.getMessage());
 			throw new IllegalArgumentException("Failed to register the speaker.",e);
 		}
 	}
@@ -44,13 +45,14 @@ public class MySQLSpeakerRepository implements SpeakerRepository {
 			if(res.next()) {
 				String name = res.getString(1);
 				String lastName = res.getString(2);
-				String topic = res.getString(3);
-				String email = res.getString(4);
+				String email = res.getString(3);
+				String topic = res.getString(4);
 				Date creationDate = res.getDate(5);
 
 				speaker = new Speaker(id,name, lastName, email, topic, creationDate.toLocalDate());
 			}
 		}catch (Exception e) {
+			System.out.println("[ERROR] " + e.getMessage());
 			throw new IllegalArgumentException("Failed to retrieve the speaker.", e);
 		}
 		return speaker;
@@ -69,6 +71,7 @@ public class MySQLSpeakerRepository implements SpeakerRepository {
 			statement.setLong(4, speaker.getId());
 			statement.executeUpdate();
 		}catch(Exception e) {
+			System.out.println("[ERROR] " + e.getMessage());
 			throw new IllegalArgumentException("Failed to update the speaker.", e);
 		}
 	}
@@ -82,6 +85,7 @@ public class MySQLSpeakerRepository implements SpeakerRepository {
 			statement.setLong(1, id);
 			statement.executeUpdate();
 		}catch(Exception e) {
+			System.out.println("[ERROR] " + e.getMessage());
 			throw new IllegalArgumentException("Failed to delete the speaker.", e);
 		}
 	}
@@ -99,14 +103,15 @@ public class MySQLSpeakerRepository implements SpeakerRepository {
 				Long id = res.getLong(1);
 				String name = res.getString(2);
 				String lastName = res.getString(3);
-				String topic = res.getString(4);
-				String email = res.getString(5);
+				String email = res.getString(4);
+				String topic = res.getString(5);
 				Date creationDate = res.getDate(6);
 				
 				Speaker speaker = new Speaker(id,name, lastName, email, topic, creationDate.toLocalDate());
 				speakers.add(speaker);
 			}
 		}catch (Exception e) {
+			System.out.println("[ERROR] " + e.getMessage());
 			throw new IllegalArgumentException("Failed to retrieve the speakers.", e);
 		}
 		
