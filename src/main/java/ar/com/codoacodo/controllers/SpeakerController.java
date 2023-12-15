@@ -75,7 +75,7 @@ public class SpeakerController extends HttpServlet{
 				responseDataSpeaker = new ResponseData<>("Speaker with id " + idParam + " not found.", HttpServletResponse.SC_NOT_FOUND, null);
 			}else {
 				response.setStatus(HttpServletResponse.SC_OK);
-				responseDataSpeaker = new ResponseData<>("Speaker retrieved successfully.", HttpServletResponse.SC_OK, speaker);
+				responseDataSpeaker = new ResponseData<>("Speaker with id " + idParam + " retrieved successfully.", HttpServletResponse.SC_OK, speaker);
 			}
 		}else{
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -113,7 +113,7 @@ public class SpeakerController extends HttpServlet{
 				try {
 					repository.update(speaker);
 					response.setStatus(HttpServletResponse.SC_OK);
-					responseDataSpeaker = new ResponseData<>("Speaker updated successfully.", HttpServletResponse.SC_OK, speaker);
+					responseDataSpeaker = new ResponseData<>("Speaker with id " + idParam + " updated successfully.", HttpServletResponse.SC_OK, speaker);
 				}catch (IllegalArgumentException e){
 					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 					responseDataSpeaker = new ResponseData<>(e.getMessage(), HttpServletResponse.SC_BAD_REQUEST, null);
@@ -136,15 +136,21 @@ public class SpeakerController extends HttpServlet{
 			HttpServletRequest request,
 			HttpServletResponse response
 	) throws IOException {
-		String id = request.getParameter("id");
+        ResponseData<Speaker> responseDataSpeaker;
+        String idParam = request.getParameter("id");
 
-		this.repository.delete(Long.parseLong(id));
-
-		ResponseData<Speaker> responseDataSpeaker = new ResponseData<>("Speaker deleted successfully.",	HttpServletResponse.SC_OK,null);
+        if (idParam != null) {
+            Long id = Long.parseLong(idParam);
+            this.repository.delete(id);
+            response.setStatus(HttpServletResponse.SC_OK);
+            responseDataSpeaker = new ResponseData<>("Speaker with id " + id + " deleted successfully.", HttpServletResponse.SC_OK, null);
+        } else{
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            responseDataSpeaker = new ResponseData<>("The 'id' parameter is required for this operation.", HttpServletResponse.SC_BAD_REQUEST, null);
+        }
 		String jsonResponse = mapper.writeValueAsString(responseDataSpeaker);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		response.setStatus(HttpServletResponse.SC_OK);
 		response.getWriter().print(jsonResponse);
 	}
 }
