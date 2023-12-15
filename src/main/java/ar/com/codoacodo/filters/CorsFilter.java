@@ -16,11 +16,13 @@ public class CorsFilter implements Filter {
         List<String> allowedOrigins = List.of("http://127.0.0.1:5500", "http://localhost:5500");
         String allowHeaders = "Content-Type";
         String origin = ((HttpServletRequest) request).getHeader("origin");
+        String allowMethods = "OPTIONS, GET, POST, PUT, DELETE";
 
         HttpServletResponse res = ((HttpServletResponse) response);
         if(origin != null && allowedOrigins.contains(origin)){
             res.addHeader("Access-Control-Allow-Origin", origin);
             res.setHeader("Access-Control-Allow-Headers", allowHeaders);
+            res.setHeader("Access-Control-Allow-Methods", allowMethods);
         }
 
         filterChain.doFilter(request, response);
